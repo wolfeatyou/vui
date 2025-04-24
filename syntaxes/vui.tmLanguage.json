@@ -1,0 +1,36 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "vui",
+	"patterns": [
+    {
+      "match": "\\bdefine\\b",
+      "name": "keyword.control.define.dsl"
+    },
+    {
+      "match": "\\b(type|component|flow|from|where|of|object|list|action|add|clear|toFlow|fromFlow|text|boolean|const|default)\\b",
+      "name": "keyword.control.dsl"
+    },
+	{
+		"match": "\\b(container|field|button|table|column|content|width|height)\\b",
+		"name": "components.control.dsl"
+	},
+    {
+      "match": "\\b(true|false)\\b",
+      "name": "constant.language.boolean.dsl"
+    },
+    {
+      "match": "\\d+(px|pc)?\\b",
+      "name": "constant.numeric.dimension.dsl"
+    },
+    {
+      "match": "\"[^\"]*\"",
+      "name": "string.quoted.double.dsl"
+    },
+    {
+      "match": "\\b[a-zA-Z_][\\w]*\\b",
+      "name": "variable.other.dsl"
+    }
+  ],
+  "repository": {},
+  "scopeName": "source.over"
+}

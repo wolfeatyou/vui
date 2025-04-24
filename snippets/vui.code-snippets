@@ -1,0 +1,20 @@
+{
+  "Define Component": {
+    "prefix": "define component",
+    "body": [
+      "define component ${1:name} ",
+      "\t$0",
+      ""
+    ],
+    "description": "Define a new component"
+  },
+  "Define Type": {
+    "prefix": "define type",
+    "body": [
+      "define type ${1:name} ",
+      "\t$0",
+      ""
+    ],
+    "description": "Define a new type"
+  }
+} 

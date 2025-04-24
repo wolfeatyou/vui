@@ -1,0 +1,47 @@
+
+define type Todo
+   name text
+   checked boolean
+
+
+
+define component "todo list"
+    flow list "todolist" of Todo
+    flow list "filtered" from "todolist" where checked == true
+    flow object "todo" of Todo
+    container
+        width 200px
+        height 100pc
+        content
+            field
+                type text
+                title "filter text"
+                value from "todo" flow "name"
+            button "Add"
+                action
+                    add
+                       toFlow "todolist"
+                       fromFlow "todo"
+                   clear
+                       flow "todo"
+            table from "filtered" flow
+                title "Todos"
+                column
+                    type checkbox
+                    title "Checked"
+                    value from default flow "checked"
+                column
+                    type text
+                    title "Title"
+                    value from default flow "title"
+                column
+                    type text
+                    title ""
+                    value from const "sample const value"
+
+script
+
+let transformer = function(flow, value) {
+    return value
+}
+

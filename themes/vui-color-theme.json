@@ -1,0 +1,29 @@
+{
+  "name": "vui Theme",
+  "type": "dark",
+  "colors": {
+    "editor.foreground": "#D4D4D4",
+    "editor.background": "#1E1E1E"
+  },
+  "tokenColors": [
+    {
+      "scope": "keyword.control.define.dsl",
+      "settings": {
+        "foreground": "#FFA500"
+      }
+    },
+    {
+      "scope": "components.control.dsl",
+      "settings": {
+        "foreground": "#257e81"
+      }
+    },
+    
+    {
+      "scope": "keyword.control.dsl",
+      "settings": {
+        "foreground": "#569CD6"
+      }
+    }
+  ]
+} 
