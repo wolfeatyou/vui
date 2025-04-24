@@ -1,65 +1,129 @@
-# vui README
+# VUI - Visual UI Language
 
-This is the README for your extension "vui". After writing up a brief description, we recommend including the following sections.
+VUI (Visual UI Language) - это предметно-ориентированный язык (DSL) для декларативного описания пользовательских интерфейсов. Это расширение VSCode предоставляет подсветку синтаксиса, валидацию и другие инструменты для работы с файлами VUI.
 
-## Features
+## Возможности
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Подсветка синтаксиса для файлов с расширением `.vui`
+- Проверка синтаксиса VUI
+- Автодополнение для основных конструкций
+- Визуализация AST (абстрактного синтаксического дерева)
+- Поддержка блоков с закрывающим литералом `end`
 
-For example if there is an image subfolder under your extension project workspace:
+## Установка
 
-\!\[feature X\]\(images/feature-x.png\)
+### Установка зависимостей
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+```bash
+npm install
+```
 
-## Requirements
+### Сборка парсера
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+```bash
+npm run build
+```
 
-## Extension Settings
+### Установка расширения в VS Code
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Чтобы установить расширение в режиме разработки:
 
-For example:
+1. Нажмите F5 в VS Code для запуска нового окна с вашим расширением
+2. Или скопируйте папку проекта в `~/.vscode/extensions/`
 
-This extension contributes the following settings:
+## Использование
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Основные команды
 
-## Known Issues
+В VSCode нажмите Ctrl+Shift+P (или Cmd+Shift+P на Mac) и введите:
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- **VUI: Parse File and Show AST** - Парсит текущий файл VUI и показывает абстрактное синтаксическое дерево (AST)
+- **VUI: Validate File Syntax** - Проверяет синтаксис текущего файла VUI
 
-## Release Notes
+### Синтаксис VUI
 
-Users appreciate release notes as you update your extension.
+VUI использует простой декларативный синтаксис для определения:
 
-### 1.0.0
+- Типов данных (`define type ... end`)
+- Компонентов (`define component ... end`)
+- Потоков данных (`flow`)
+- Действий (`define action ... end`)
+- Пайпов для трансформации данных (`define pipe ... end`)
 
-Initial release of ...
+Все блоки в языке VUI закрываются ключевым словом `end`. Это делает код более читаемым и структурированным.
 
-### 1.0.1
+Базовый пример:
 
-Fixed issue #.
+```vui
+# Определение типа
+define type Todo
+   name string
+   checked boolean
+end
 
-### 1.1.0
+# Определение компонента
+define component instance todo_list
+    flow Todo[] todolist
+    container
+        width 200px
+        height 100pc
+        content
+            button
+                title "Add"
+                action
+                    add
+                       a "todolist"
+                       b "todo"
+                    end
+                end
+            end
+        end
+    end
+end
+```
 
-Added features X, Y, and Z.
+## Структура блоков
 
----
+Все определения в VUI имеют чёткую структуру с обязательным закрывающим `end`:
 
-## Working with Markdown
+```
+define [тип_определения] [имя]
+    ...содержимое...
+end
+```
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+Вложенные блоки также закрываются ключевым словом `end`:
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+```
+define component type button
+    title string
+    action
+        ...действия...
+    end
+end
+```
 
-## For more information
+## Разработка
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+### Структура проекта
 
-**Enjoy!**
+- `src/grammar.pegjs` - Грамматика PEG.js для парсинга VUI
+- `src/extension.js` - Расширение VSCode
+- `samples/` - Примеры файлов VUI
+- `syntaxes/vui.tmLanguage.json` - Определение подсветки синтаксиса
+- `snippets/vui.code-snippets` - Сниппеты для автодополнения
+
+### Тестирование
+
+```bash
+npm test
+```
+
+Это запустит тесты парсера на примере файла `samples/test.vui`.
+
+## Планы развития
+
+- Улучшение диагностики ошибок
+- Интеграция с генераторами HTML/CSS/JS
+- Предварительный просмотр UI
+- Поддержка дополнительных элементов интерфейса

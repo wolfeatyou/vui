@@ -1,0 +1,160 @@
+# описание DSL для *.vui
+# так работают коментарии в DSL
+
+# оределение типа данных
+define type Todo 
+   name string
+   checked boolean
+   propNumber number
+   # определение массива
+   propArray string[]
+end
+
+#типы могут содержать подтипы
+define type Composite 
+   # простые типы данных string, number, boolean, any
+   name string
+   todo Todo
+   todos Todo[]
+end  
+
+# определение pipe
+define pipe custom_filtered 
+    parameters
+        a flow any[]  # flow any[]
+    end    
+    script     
+    function filter(a:any[]) {
+        return a.filter((t)=>t.checked);
+    }
+    end
+ end   
+
+# определение action
+define action add 
+    parameters
+        a flow any
+        b flow any
+    end    
+    function add(a:any, b:any) {
+        return a;
+    }
+end
+
+# определение action instance на основе встренного типа action
+define action clear 
+    parameters
+        a flow any[]
+    end    
+    script
+    function clear(a:any[]) {
+        a.clear()
+    }
+    end
+end
+
+# определение типа компонента ui 
+define component type container 
+    width string
+    height string
+    content component[]
+end
+
+# определение типа компонента ui 
+define component type column 
+    title "Title"
+    text  # подтип компонента, чтобы можно было указать тип так column:text
+        value string
+    end    
+    number  # подтип компонента, чтобы можно было указать тип так column:number
+        value number 
+    end       
+end   
+
+# определение типа компонента ui 
+define component type table 
+    flow flow []
+    title string
+    columns column[]
+end
+    
+# определение типа компонента ui 
+define component type field 
+    title string
+    text  #подтип компонента, для читаемости. чтобы можно было указать тип так field:text
+        value string
+    end    
+    checkbox
+        value boolean
+    end    
+    number
+        value number
+        min number
+        max number
+    end    
+end
+
+# определение ui component
+define component type button
+    title string
+    # action встроенный тип 
+    action action[]
+end    
+
+
+# определяем композитный компонент
+define component instance todo_list
+    # описываем потоки данных
+    # это поток данных будет проинициализирован как пустой массив []
+    flow Todo[] todolist 
+    # поток данных будет реактивно подписан на pipe который будет фильтровать todolist
+    flow Todo[] filtered from pipe custom_filtered todolist 
+    # в этом потоке данных будет объект
+    flow Todo todo
+    #далее композиция из компонентов 
+    container
+        width 200px
+        height 100pc
+        content
+            field:text
+                title "filter text"
+                # 2 way data bind c flow и его свойством "name" 
+                value from "todo" flow property "name"
+            end    
+            button 
+                title "Add"
+                action
+                    add
+                       a "todolist"
+                       b "todo"
+                    end   
+                    clear
+                       flow "todo"
+                    end  
+                end     
+            end           
+            # таблица данные берет из потока filtered
+            table 
+                flow filtered
+                title "Todos"
+                # колонка типа checkbox
+                column:checkbox
+                    title "Checked"
+                    value from flow property "checked"
+                end    
+                column:text
+                    title "Title"
+                    value from flow property "title"
+                end    
+                column:text
+                    title ""
+                    value from const "sample const value"
+                end   
+            end
+        end 
+    end
+end                
+
+
+
+

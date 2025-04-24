@@ -1,0 +1,31 @@
+# Простой тестовый файл
+
+define type User
+   name string
+   age number
+end
+
+define component type button
+   title string
+   action string
+end
+
+define component instance userList
+   flow User[] users
+   
+   container
+      width 800px
+      height 600px
+      content
+         button
+            title "Test"
+            action
+               add
+                  a "users"
+                  b "user"
+               end
+            end
+         end
+      end
+   end
+end 

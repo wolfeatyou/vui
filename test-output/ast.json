@@ -1,0 +1,49 @@
+{
+  "type": "Program",
+  "statements": [
+    {
+      "type": "TypeDefinition",
+      "name": "User",
+      "fields": [
+        {
+          "type": "TypeField",
+          "name": "name",
+          "fieldType": {
+            "typeName": "string",
+            "isArray": false
+          }
+        }
+      ]
+    },
+    {
+      "type": "ComponentInstanceDefinition",
+      "name": "test",
+      "flows": [
+        {
+          "type": "FlowDefinition",
+          "flowType": {
+            "typeName": "Test",
+            "isArray": false
+          },
+          "name": "test",
+          "source": null
+        }
+      ],
+      "ui": {
+        "type": "Button",
+        "attributes": [
+          {
+            "type": "Attribute",
+            "name": "title",
+            "value": "ff"
+          },
+          {
+            "type": "Attribute",
+            "name": "action",
+            "value": "test"
+          }
+        ]
+      }
+    }
+  ]
+}

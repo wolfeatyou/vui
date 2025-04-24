@@ -1,0 +1,89 @@
+# Тестовый файл для проверки грамматики с литералом end
+
+# Определение типа данных
+define type User
+   name string
+   age number
+   isActive boolean
+end
+
+# Определение pipe
+define pipe userFilter
+    parameters
+        users flow User[]
+    end
+    script
+        function filter(users) {
+            return users.filter(u => u.isActive);
+        }
+    end
+end
+
+# Определение action
+define action addUser
+    parameters
+        users flow User[]
+        user flow User
+    end
+    function add(users, user) {
+        users.push(user);
+        return users;
+    }
+end
+
+# Определение типа компонента
+define component type button
+    title string
+    action string
+end
+
+# Определение сложного компонента
+define component type userForm
+    width string
+    height string
+    content component[]
+end
+
+# Определение инстанса компонента
+define component instance userList
+    # Определяем потоки данных
+    flow User[] allUsers
+    flow User[] activeUsers from pipe userFilter allUsers
+    
+    # Определяем UI
+    container
+        width 800px
+        height 600px
+        content
+            field:text
+                title "Search"
+                value "search term"
+            end
+            
+            button
+                title "Add User"
+                action
+                    addUser
+                        a "allUsers"
+                        b "newUser"
+                    end
+                end
+            end
+            
+            table
+                flow activeUsers
+                title "Active Users"
+                columns
+                    column:text
+                        title "Name"
+                        value from flow property "name"
+                    end
+                    column:text
+                        title "Age"
+                        value from flow property "age"
+                    end
+                end
+            end
+        end
+    end
+end 

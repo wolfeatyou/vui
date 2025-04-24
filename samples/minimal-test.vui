@@ -1,0 +1,11 @@
+define type User
+   name string
+end
+
+define component instance test
+  flow Test test
+  button
+      title ff
+      action test
+  end 
+end

@@ -1,0 +1,17 @@
+define type User
+   name string
+end
+
+define component type button
+   title string
+end
+
+define component instance test
+   container
+      content
+         button
+            title "Test"
+         end
+      end
+   end
+end 

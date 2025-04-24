@@ -11,10 +11,116 @@
   "Define Type": {
     "prefix": "define type",
     "body": [
-      "define type ${1:name} ",
+      "define type ${1:name}",
+      "\t${2:property} ${3:type}",
       "\t$0",
-      ""
+      "end"
     ],
-    "description": "Define a new type"
+    "description": "Define a new type with end block"
+  },
+  "Define Component Type": {
+    "prefix": "define component type",
+    "body": [
+      "define component type ${1:name}",
+      "\t${2:property} ${3:type}",
+      "\t$0",
+      "end"
+    ],
+    "description": "Define a component type with end block"
+  },
+  "Define Component Instance": {
+    "prefix": "define component instance",
+    "body": [
+      "define component instance ${1:name}",
+      "\tflow ${2:type} ${3:name}",
+      "\t${4:container}",
+      "\t\t$0",
+      "\tend",
+      "end"
+    ],
+    "description": "Define a component instance with end block"
+  },
+  "Define Action": {
+    "prefix": "define action",
+    "body": [
+      "define action ${1:name}",
+      "\tparameters",
+      "\t\t${2:param} flow ${3:type}",
+      "\tend",
+      "\tfunction ${4:funcName}(${5:params}) {",
+      "\t\t$0",
+      "\t}",
+      "end"
+    ],
+    "description": "Define an action with end block"
+  },
+  "Define Pipe": {
+    "prefix": "define pipe",
+    "body": [
+      "define pipe ${1:name}",
+      "\tparameters",
+      "\t\t${2:param} flow ${3:type}[]",
+      "\tend",
+      "\tscript",
+      "\t\tfunction ${4:filter}(${5:params}) {",
+      "\t\t\t$0",
+      "\t\t}",
+      "\tend",
+      "end"
+    ],
+    "description": "Define a pipe with end block"
+  },
+  "Container": {
+    "prefix": "container",
+    "body": [
+      "container",
+      "\twidth ${1:100px}",
+      "\theight ${2:100px}",
+      "\tcontent",
+      "\t\t$0",
+      "\tend",
+      "end"
+    ],
+    "description": "Define a container with content"
+  },
+  "Button": {
+    "prefix": "button",
+    "body": [
+      "button",
+      "\ttitle \"${1:Button}\"",
+      "\taction",
+      "\t\t${2:actionName}",
+      "\t\t\t${3:param} \"${4:value}\"",
+      "\t\tend",
+      "\tend",
+      "end"
+    ],
+    "description": "Define a button with action"
+  },
+  "Field": {
+    "prefix": "field",
+    "body": [
+      "field${1::text}",
+      "\ttitle \"${2:Label}\"",
+      "\tvalue ${3:\"value\"}",
+      "end"
+    ],
+    "description": "Define a field"
+  },
+  "Table": {
+    "prefix": "table",
+    "body": [
+      "table",
+      "\tflow ${1:dataFlow}",
+      "\ttitle \"${2:Table Title}\"",
+      "\tcolumns",
+      "\t\tcolumn:text",
+      "\t\t\ttitle \"${3:Column Title}\"",
+      "\t\t\tvalue from flow property \"${4:property}\"",
+      "\t\tend",
+      "\tend",
+      "end"
+    ],
+    "description": "Define a table with columns"
   }
 } 

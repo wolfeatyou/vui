@@ -1,0 +1,17 @@
+# Test file
+define type Test
+   name string
+   value number
+end   
+
+define component type button
+   title string
+   action string
+end
+define component instance TestComponent
+   flow Test test
+   button
+      title ff
+      action test
+    end
+end      

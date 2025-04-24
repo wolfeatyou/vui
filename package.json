@@ -9,26 +9,58 @@
   "categories": [
     "Programming Languages"
   ],
+  "main": "src/extension.js",
+  "scripts": {
+    "build:parser": "peggy -o src/parser.js src/grammar.pegjs",
+    "build": "npm run build:parser",
+    "test": "node test/parser.test.js"
+  },
+  "dependencies": {
+    "peggy": "^3.0.2"
+  },
   "contributes": {
-    "languages": [{
-      "id": "vui",
-      "aliases": ["vui", "vui"],
-      "extensions": [".vui"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "vui",
-      "scopeName": "source.over",
-      "path": "./syntaxes/vui.tmLanguage.json"
-    }],
-    "themes": [{
-      "label": "vui Theme",
-      "uiTheme": "vs-dark",
-      "path": "./themes/vui-color-theme.json"
-    }],
-    "snippets": [{
-      "language": "vui",
-      "path": "./snippets/vui.code-snippets"
-    }]
+    "commands": [
+      {
+        "command": "vui.parseFile",
+        "title": "VUI: Parse File and Show AST"
+      },
+      {
+        "command": "vui.validateFile",
+        "title": "VUI: Validate File Syntax"
+      }
+    ],
+    "languages": [
+      {
+        "id": "vui",
+        "aliases": [
+          "vui",
+          "vui"
+        ],
+        "extensions": [
+          ".vui"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "vui",
+        "scopeName": "source.over",
+        "path": "./syntaxes/vui.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "vui Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/vui-color-theme.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "vui",
+        "path": "./snippets/vui.code-snippets"
+      }
+    ]
   }
 }
