@@ -6,12 +6,8 @@ define component type button
    title string
 end
 
-define component instance test
-   container
-      content
-         button
-            title "Test"
-         end
-      end
+define component instance Test
+   anyElement
+      anyProp "any value"|expresseion | array of object| object
    end
 end 

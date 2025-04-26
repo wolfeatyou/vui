@@ -1,17 +1,81 @@
-# Test file
-define type Test
-   name string
-   value number
-end   
 
-define component type button
-   title string
-   action string
+component container 
+   params
+      width string
+      height string
+      content component[]
+   end   
+   external name "UiContainer"
 end
-define component instance TestComponent
-   flow Test test
-   button
-      title ff
-      action test
+
+component container 
+   params
+      width string
+      height string
+      content component[]
+   end   
+end
+
+component todo_list 
+   params
+      flow Todo[] todolist
+      show_checked boolean
+   end
+   flow Todo todo 
+        initial
+           name ""
+           checked false
+        end   
+   end       
+   flow Todo[] filtered = custom_filtered[par1:'str'] | todolist end
+   container
+        width 200px
+        height 100%
+        content
+            text
+                title "filter text"
+                value  prop["name"] | todo 
+            end    
+            button 
+                title extr "Add"
+                action 
+                    add todo to todolist 
+                    clear todo
+                end     
+            end           
+            table 
+                data filtered
+                title "Todos"
+                column:checkbox
+                    title "Checked"
+                    value prop["checked"] | data
+                end    
+                column:text
+                    title "Title"
+                    value uppercase | prop["title"] | data
+                end  
+                column:text
+                    title "Title"
+                    value uppercase | concat[prop["title"], " - ", prop["checked"]] | data
+                end   
+                column:text
+                    title "Title"
+                    value 
+                        concat 
+                           prop["title"] data
+                           prop["checked"] data
+                        end   
+                    end    
+                end    
+                column:text
+                    title ""
+                    value const "sample const value"
+                end   
+            end
+        end 
     end
-end      
+end                
+
+
+
+

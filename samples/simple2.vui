@@ -1,31 +1,58 @@
-# Простой тестовый файл
 
-define type User
-   name string
-   age number
-end
+component container 
+   params
+      width string
+      height string
+      content component[]       
+   render "UiContainer"
 
-define component type button
-   title string
-   action string
-end
+component container 
+   params
+      width string
+      height string
+      content component[]
+ 
+component todo_list 
+   params
+      flow Todo[] todolist
+      show_checked boolean
 
-define component instance userList
-   flow User[] users
+   flow Todo todo 
+        initial
+           name ""
+           checked false
+
+   flow Todo[] filtered = custom_filtered[par1:'str'] | todolist end
    
    container
-      width 800px
-      height 600px
-      content
-         button
-            title "Test"
-            action
-               add
-                  a "users"
-                  b "user"
-               end
-            end
-         end
-      end
-   end
-end 
+        width 200px
+        height 100%
+        content
+            text
+                title "filter text"
+                value  prop["name"] | todo 
+            button 
+                title extr "Add"
+                action 
+                    add todo to todolist 
+                    clear todo
+            table 
+                data filtered
+                title "Todos"
+                column:checkbox
+                    title "Checked"
+                    value prop["checked"] | data
+                column:text
+                    title "Title"
+                    value uppercase | prop["title"] | data
+                column:text
+                    title "Title"
+                    value uppercase | concat[prop["title"], " - ", prop["checked"]] | data
+                
+                column:text
+                    title ""
+                    value const "sample const value"
+
+
+
+

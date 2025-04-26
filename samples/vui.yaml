@@ -1,0 +1,90 @@
+components:
+  - name: container
+    params:
+      width: string
+      height: string
+      content:
+        type: component[]
+    external_name: "UiContainer"
+
+  - name: container
+    params:
+      width: string
+      height: string
+      content:
+        type: component[]
+
+  - name: todo_list
+    params:
+      flow: 
+        name: todolist
+        type: Todo[]
+      show_checked: boolean
+
+    flow:
+      - name: todo
+        type: object
+        value:
+          const:
+            name: "Sample todo"
+            checked: false
+
+      - name: filtered_todos
+        type: Todo[]
+        value: 
+          operation: custom_filtered
+            params:
+              par1: str
+              source: todolist
+
+    container:
+      width: 200px
+      height: 100%
+      content:
+        - text:
+            title: "filter text"
+            value:
+              operation: "prop"
+                  name: "name"
+                  source: todo
+
+        - button:
+            title: "Add"
+            action:
+              - operation: add
+                  from: todo
+                  to: todolist
+              - operation: clear
+                  flow: todo
+
+        - table:
+            data: filtered_todos
+            title: "Todos"
+            columns:
+              - type: checkbox
+                title: "Checked"
+                value:
+                  operation: "prop"
+                    name: "checked"
+                    source: item_data
+
+              - type: text
+                title: "Title"
+                value:
+                  operation: "concat"
+                    params:
+                      a:  
+                        operation: "prop"
+                          name: "title"
+                          source: item_data
+                      b:
+                        const: " - "
+                      c:
+                        operation: "prop"
+                          name: "checked"
+                          source: item_data
+
+              - type: text
+                title: ""
+                value:
+                  const: "sample const value"

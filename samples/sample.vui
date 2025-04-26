@@ -111,6 +111,7 @@ define component instance todo_list
     flow Todo[] filtered from pipe custom_filtered todolist 
     # в этом потоке данных будет объект
     flow Todo todo
+    flow Todo[] filtered = custom_filtered[par1:'str'] < todolist 
     #далее композиция из компонентов 
     container
         width 200px
@@ -119,7 +120,7 @@ define component instance todo_list
             field:text
                 title "filter text"
                 # 2 way data bind c flow и его свойством "name" 
-                value from "todo" flow property "name"
+                value from getprop["name"] | Todo 
             end    
             button 
                 title "Add"
