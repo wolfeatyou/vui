@@ -1,13 +1,6 @@
 components:
   - name: container
-    params:
-      width: string
-      height: string
-      content:
-        type: component[]
     external_name: "UiContainer"
-
-  - name: container
     params:
       width: string
       height: string
@@ -21,7 +14,7 @@ components:
         type: Todo[]
       show_checked: boolean
 
-    flow:
+    flows:
       - name: todo
         type: object
         value:
@@ -33,58 +26,65 @@ components:
         type: Todo[]
         value: 
           operation: custom_filtered
-            params:
-              par1: str
-              source: todolist
+          params:
+            par1: str
+            source: todolist
 
-    container:
-      width: 200px
-      height: 100%
-      content:
-        - text:
-            title: "filter text"
-            value:
-              operation: "prop"
+    content:
+      container:
+        width: 200px
+        height: 100%
+        content:
+          - text:
+              title: "filter text"
+              value:
+                operation: prop
+                params:
                   name: "name"
                   source: todo
 
-        - button:
-            title: "Add"
-            action:
-              - operation: add
-                  from: todo
-                  to: todolist
-              - operation: clear
-                  flow: todo
+          - button:
+              title: "Add"
+              action:
+                - operation: add
+                  params:
+                    from: todo
+                    to: todolist
+                - operation: clear
+                  params:
+                    flow: todo
 
-        - table:
-            data: filtered_todos
-            title: "Todos"
-            columns:
-              - type: checkbox
-                title: "Checked"
-                value:
-                  operation: "prop"
-                    name: "checked"
-                    source: item_data
+          - table:
+              data: filtered_todos
+              title: "Todos"
+              columns:
+                - type: checkbox
+                  title: "Checked"
+                  value:
+                    operation: prop
+                    params:
+                      name: "checked"
+                      source: item_data
 
-              - type: text
-                title: "Title"
-                value:
-                  operation: "concat"
+                - type: text
+                  title: "Title"
+                  value:
+                    operation: concat
                     params:
                       a:  
-                        operation: "prop"
+                        operation: prop
+                        params:
                           name: "title"
                           source: item_data
                       b:
                         const: " - "
                       c:
-                        operation: "prop"
+                        operation: prop
+                        params:
                           name: "checked"
                           source: item_data
 
-              - type: text
-                title: ""
-                value:
-                  const: "sample const value"
+                - type: text
+                  title: ""
+                  value:
+                    const: "sample const value"
