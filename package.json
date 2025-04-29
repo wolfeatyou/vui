@@ -13,9 +13,11 @@
   "scripts": {
     "build:parser": "peggy -o src/parser.js src/grammar.pegjs",
     "build": "npm run build:parser",
-    "test": "node test/parser.test.js"
+    "test": "node test/parser.test.js",
+    "test2": "jest"
   },
   "dependencies": {
+    "acorn": "^8.14.1",
     "peggy": "^3.0.2"
   },
   "contributes": {
@@ -62,5 +64,8 @@
         "path": "./snippets/vui.code-snippets"
       }
     ]
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

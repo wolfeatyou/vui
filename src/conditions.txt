@@ -1,0 +1,74 @@
+описание задачи:
+
+при выполнении js в браузере нуобходимо вычислять простые однострочные
+выражения написанные на языке поддреживающем определенный синтакис.
+
+результат выражения всегда boolean 
+выражения записываются в одну строчку
+выражения могут вызывать внешние api
+примеры выражений:
+
+пример простого
+"5<6"
+результат: true
+
+"5>6"
+результат: false
+
+пример с операторам
+"5 == 6"
+результат: false
+
+"5 == 6 or 5 != 6"
+результат: true
+
+пример с скобками
+"((5 == 6) || (5 != 6))"
+результат: true
+
+пример c массивами
+"[1,2,3] include [1] and [1,2] include [3]"
+результат: false
+
+обращеник к объектам api
+"api.ctx.user_id == 5 "
+"api.ctx.user_name == 'denis' "
+"api.ctx.user_id == 5 and api.ctx.user_name == 'denis' "
+
+обращение к функциям api
+"api.hasGrants(['edit', 'create']) "
+
+каким образом мне реализовать это с помощью собстванного парсера выражений? 
+
+предлагай варианты
+
+
+visibility_expression: "!context.clientId"
+visibility_expression: "(!context.institution.code == 'ROS')"
+visibility_expression: "(context.institution.code == 'ROS' || context.institution.code == 'RAC') && context.agentAdditionalInfo.rn_role == 'Provider'"
+visibility_expression: "(context.institution.code == 'TEST')"
+visibility_expression: "(context.institutionCode == 'ROS' || context.institutionCode == 'RAC')"
+visibility_expression: "(context.institutionCode == 'TEST')"
+visibility_expression: "context.agent.paymentChannel == 'H2H_LOTY'"
+visibility_expression: "context.institution.code != 'ROS' && context.institution.code != 'RAC' && context.agentAdditionalInfo.rn_role == 'BankAgent'"
+visibility_expression: "context.institution.code != 'ROS' && context.institution.code != 'RAC'"
+visibility_expression: "context.institution.code != 'ROS'"
+visibility_expression: "context.institution.code == 'RFB' || context.institution.code == 'CI' || context.institution.code == 'RAC'"
+visibility_expression: "context.institution.code == 'ROS' && context.agentAdditionalInfo.rn_role == 'Agent'"
+visibility_expression: "context.institution.code == 'ROS' && context.agentAdditionalInfo.rn_role == 'Provider'"
+visibility_expression: "context.institution.code == 'ROS'"
+visibility_expression: "context.institutionCode != 'ROS' && context.institutionCode != 'RAC'"
+visibility_expression: "context.institutionCode != 'ROS'"
+visibility_expression: "context.institutionCode != 'ROS'"visibility_expression: "context.institutionCode == 'RFB' || context.institutionCode == 'CI' || context.institutionCode == 'RAC'"
+visibility_expression: "context.institutionCode == 'ROS'"
+visibility_expression: "context.stage != 'Authorization'"
+visibility_expression: "false"
+visibility_expression: "true"
+* вхождение в массив
+visibility_expression: "(['Retailer', 'Outlet'].includes(context.role))"
+visibility_expression: "(context.institution.code == 'ROS' && ['RetailChain', 'Outlet'].includes(context.role) || context.institution.code != 'ROS')"
+* странное отрицание в начале, мож опечатка и ! собирались левее за скобки вынести
+visibility_expression: "!(context.institution.code == 'ROS')"
+visibility_expression: "!(context.institution.code == 'ROS')"
+* проверка на null объекта
+visibility_expression: "(context.agentAdditionalInfo?.rn_role == 'BankAgent')"

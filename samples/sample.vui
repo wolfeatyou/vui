@@ -120,7 +120,7 @@ define component instance todo_list
             field:text
                 title "filter text"
                 # 2 way data bind c flow и его свойством "name" 
-                value from getprop["name"] | Todo 
+                value from prop["name"] < todo 
             end    
             button 
                 title "Add"
